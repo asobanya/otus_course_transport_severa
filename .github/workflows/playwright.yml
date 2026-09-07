@@ -13,19 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
-    env:
-      BASE_URL: ${{ secrets.BASE_URL }}
-      USER1_EMAIL: ${{ secrets.USER1_EMAIL }}
-      USER1_PASSWORD: ${{ secrets.USER1_PASSWORD }}
-      USER2_EMAIL: ${{ secrets.USER2_EMAIL }}
-      USER2_PASSWORD: ${{ secrets.USER2_PASSWORD }}
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -39,14 +30,20 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run Playwright tests
+      - name: Run tests
         run: npm test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          USER1_EMAIL: ${{ secrets.USER1_EMAIL }}
+          USER1_PASSWORD: ${{ secrets.USER1_PASSWORD }}
+          USER2_EMAIL: ${{ secrets.USER2_EMAIL }}
+          USER2_PASSWORD: ${{ secrets.USER2_PASSWORD }}
 
-      - name: Upload Playwright report
+      - name: Upload test artifacts
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v5
         with:
-          name: playwright-report
+          name: playwright-artifacts
           path: |
             playwright-report/
             test-results/
