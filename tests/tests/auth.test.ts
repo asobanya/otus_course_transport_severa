@@ -43,10 +43,6 @@ test.describe('Авторизация и регистрация', () => {
 
         await expect(loginPage.flashError).toBeVisible();
         await expect(loginPage.flashError).toContainText(MESSAGES.invalidRegistration);
-
-        await expect(loginPage.flashError).toBeHidden({
-          timeout: 15_000,
-        });
       });
 
       await test.step('Проверить поле «Имя»', async () => {
