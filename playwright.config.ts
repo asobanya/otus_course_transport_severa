@@ -7,11 +7,11 @@ if (process.env.TMS_SYNC === 'true') {
   reporters.push(['./scripts/tms-reporter.ts']);
 }
 
-const BASE_URL = process.env.BASE_URL ?? 'https://xn--80aaflb9bhhgedfdgh.xn--p1ai';
+const BASE_URL = process.env.BASE_URL ?? 'https://dev-pub.altech.local/#/';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 10000,
+  timeout: 17000,
   retries: 1,
   workers: process.env.CI ? 1 : undefined,
 

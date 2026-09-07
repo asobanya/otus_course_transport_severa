@@ -6,7 +6,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node", "@playwright/test"]
+    "types": ["node", "@playwright/test"],
+    "paths": {
+      "@pages": ["./tests/pages/index.ts"],
+      "@pages/*": ["./tests/pages/*"],
+      "@data/*": ["./tests/data/*"]
+    }
   },
   "include": ["tests/**/*.ts", "playwright.config.ts", "scripts/**/*.ts"]
 }
