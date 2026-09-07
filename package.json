@@ -1,20 +1,33 @@
 {
   "name": "otus_course_transport_severa",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "type-check": "tsc --noEmit"
+    "test:tms": "cross-env NODE_OPTIONS=--use-system-ca TMS_SYNC=true playwright test",
+    "type-check": "tsc --noEmit",
+    "tms-sync": "cross-env NODE_OPTIONS=--use-system-ca ts-node scripts/tms-sync.ts",
+    "lint": "eslint . --fix",
+    "lint:ci": "eslint .",
+    "format": "prettier . --write",
+    "format:ci": "prettier . --check",
+    "check": "npm run type-check && npm run lint:ci && npm run format:ci"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.4.0",
-    "typescript": "^7.0.2"
+    "@typescript-eslint/eslint-plugin": "^8.68.0",
+    "@typescript-eslint/parser": "^8.68.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

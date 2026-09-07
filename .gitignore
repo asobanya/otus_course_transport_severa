@@ -1,4 +1,10 @@
 node_modules/
+
+.env
+.env.local
+
 playwright-report/
 test-results/
-.env
+
+.DS_Store
+.idea/
