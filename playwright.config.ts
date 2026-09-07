@@ -1,14 +1,24 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, type ReporterDescription } from '@playwright/test';
+import 'dotenv/config';
+
+const reporters: ReporterDescription[] = [['list'], ['html', { open: 'never' }]];
+
+if (process.env.TMS_SYNC === 'true') {
+  reporters.push(['./scripts/tms-reporter.ts']);
+}
+
+const BASE_URL = process.env.BASE_URL ?? 'https://xn--80aaflb9bhhgedfdgh.xn--p1ai';
 
 export default defineConfig({
   testDir: './tests',
   timeout: 30000,
   retries: 0,
+  workers: process.env.CI ? 1 : undefined,
 
   use: {
-    baseURL: 'https://xn--80aaflb9bhhgedfdgh.xn--p1ai/#/',
+    baseURL: BASE_URL,
     headless: true,
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 
@@ -21,5 +31,5 @@ export default defineConfig({
     },
   ],
 
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: reporters,
 });
