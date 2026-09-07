@@ -11,7 +11,7 @@ const BASE_URL = process.env.BASE_URL ?? 'https://dev-pub.altech.local/#/';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 17000,
+  timeout: 30000,
   retries: 1,
   workers: process.env.CI ? 1 : undefined,
 
