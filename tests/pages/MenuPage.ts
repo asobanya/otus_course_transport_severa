@@ -19,10 +19,6 @@ export class MenuPage extends BasePage {
 
   readonly loginButton: Locator;
   readonly logoutButton: Locator;
-  readonly loginModal: Locator;
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly submitLoginButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -45,33 +41,10 @@ export class MenuPage extends BasePage {
 
     this.loginButton = menuList.getByRole('button', { name: 'Вход' });
     this.logoutButton = this.menu.getByRole('button', { name: 'Выход' });
-
-    this.loginModal = page.locator('.t-modal').filter({
-      has: page.locator('.t-modal__title', { hasText: /^Вход$/ }),
-    });
-    this.emailInput = this.loginModal.getByRole('textbox', {
-      name: 'Электронная почта',
-    });
-    this.passwordInput = this.loginModal.getByRole('textbox', {
-      name: 'Пароль',
-      exact: true,
-    });
-    this.submitLoginButton = this.loginModal.getByRole('button', {
-      name: 'Войти',
-      exact: true,
-    });
   }
 
   async goto(): Promise<void> {
     await this.open('/#/');
-  }
-
-  async login(email: string, password: string): Promise<void> {
-    await this.menuButton.click();
-    await this.loginButton.click();
-    await this.emailInput.fill(email);
-    await this.passwordInput.fill(password);
-    await this.submitLoginButton.click();
   }
 
   profileButton(userName: string): Locator {
