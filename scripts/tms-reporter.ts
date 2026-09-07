@@ -9,11 +9,12 @@ function requireEnvironment(name: string): string {
   return value;
 }
 
+const PROJECT_ID = '2';
+
 export default class TmsReporter implements Reporter {
   private token = '';
   private baseUrl = '';
   private planId = '';
-  private projectId = '';
   private caseMap = new Map<string, number>();
   private pending: Promise<unknown>[] = [];
   private sentCount = 0; // Считаем, сколько статусов успешно отправилось
@@ -22,7 +23,6 @@ export default class TmsReporter implements Reporter {
     const apiUrl = requireEnvironment('TESTY_API_URL');
     requireEnvironment('TESTY_USERNAME');
     requireEnvironment('TESTY_PASSWORD');
-    this.projectId = requireEnvironment('TESTY_PROJECT_ID');
     this.planId = requireEnvironment('TESTY_PLAN_ID');
 
     this.baseUrl = apiUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
@@ -56,7 +56,7 @@ export default class TmsReporter implements Reporter {
       visited.add(currentId);
 
       const res = await fetch(
-        `${this.baseUrl}/api/v2/testplans/union/?project=${this.projectId}&parent=${currentId}&page_size=500`,
+        `${this.baseUrl}/api/v2/testplans/union/?project=${PROJECT_ID}&parent=${currentId}&page_size=500`,
         {
           headers: { Authorization: `Bearer ${this.token}` },
         },

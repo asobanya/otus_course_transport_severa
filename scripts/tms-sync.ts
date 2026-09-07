@@ -6,7 +6,6 @@ import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({
   options: {
-    project: { type: 'string', short: 'p' },
     suite: { type: 'string', short: 's' },
     case: { type: 'string', short: 'c' },
   },
@@ -23,7 +22,7 @@ function requireEnvironment(name: string): string {
 const API_URL = requireEnvironment('TESTY_API_URL');
 const USERNAME = requireEnvironment('TESTY_USERNAME');
 const PASSWORD = requireEnvironment('TESTY_PASSWORD');
-const PROJECT_ID = requireEnvironment('TESTY_PROJECT_ID');
+const PROJECT_ID = '2';
 const BASE_OUTPUT_DIR = path.join(process.cwd(), 'docs');
 
 interface Suite {
@@ -205,7 +204,7 @@ function formatTestCaseToMarkdown(test: TestCase): string {
 async function syncTests(): Promise<void> {
   const headers = await getAuthHeaders();
   const baseUrl = API_URL.replace(/\/$/, '');
-  const projectId = values.project || PROJECT_ID;
+  const projectId = PROJECT_ID;
 
   console.log(`🔄 Загрузка списка сьютов...`);
   const suiteMap = await getSuiteMap(headers, projectId);
